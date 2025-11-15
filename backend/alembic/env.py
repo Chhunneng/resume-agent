@@ -11,13 +11,15 @@ from pathlib import Path
 backend_dir = Path(__file__).parent.parent
 sys.path.insert(0, str(backend_dir))
 
-from src.config import db_config
+from src.config import settings
+from src.database import metadata
 from sqlmodel import SQLModel
 
 # Import all models here so Alembic can discover them for autogenerate
 # When you create new models, import them here (e.g., from src.models import User)
 # SQLModel.metadata automatically collects all registered SQLModel models
-target_metadata = SQLModel.metadata
+# Use the custom metadata with naming conventions
+target_metadata = metadata
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -36,7 +38,7 @@ if config.config_file_name is not None:
 
 def get_url():
     """Get database URL from configuration."""
-    return db_config.get_database_url().replace("+asyncpg", "")
+    return settings.get_database_url().replace("+asyncpg", "")
 
 
 def run_migrations_offline() -> None:
