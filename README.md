@@ -306,7 +306,10 @@ Contributions are welcome! Please follow these guidelines:
 2. **Follow the code style** guidelines mentioned above
 3. **Write tests** for new features and ensure all tests pass
 4. **Update documentation** as needed (including directory-specific READMEs)
-5. **Submit a pull request** with a clear description of your changes
+5. **Follow commit conventions** - We use [Conventional Commits 1.0.0](https://www.conventionalcommits.org/en/v1.0.0/) for commit messages. See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines
+6. **Submit a pull request** with a clear description of your changes
+
+For detailed contributing guidelines, including commit message conventions and examples, please see [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ### Reporting Issues
 
