@@ -47,13 +47,13 @@ class CustomBaseModel(BaseModel):
         """
         result = super().model_dump(**kwargs)
         mode = kwargs.get("mode", "python")
-        
+
         if mode == "json":
             # Convert datetime fields to UTC strings
             for key, value in result.items():
                 if isinstance(value, datetime):
                     result[key] = datetime_to_utc_str(value)
-        
+
         return result
 
     def serializable_dict(self, **kwargs) -> dict:
@@ -71,4 +71,3 @@ class CustomBaseModel(BaseModel):
         """
         default_dict = self.model_dump(mode="json", **kwargs)
         return jsonable_encoder(default_dict)
-

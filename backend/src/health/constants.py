@@ -15,4 +15,3 @@ class DatabaseStatus(str, Enum):
 
     CONNECTED = "connected"
     DISCONNECTED = "disconnected"
-

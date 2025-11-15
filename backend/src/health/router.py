@@ -125,4 +125,3 @@ async def health_check_detailed() -> JSONResponse:
         content=health_detail.model_dump(mode="json"),
         status_code=http_status,
     )
-

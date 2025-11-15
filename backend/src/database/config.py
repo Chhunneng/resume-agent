@@ -34,4 +34,3 @@ class DatabaseConfig(BaseSettings):
 
 # Global database configuration instance
 db_settings = DatabaseConfig()
-

@@ -6,10 +6,10 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 
 from .database import close_db, init_db
+from .datetime import get_current_utc_datetime
 from .health.constants import HealthStatus
 from .health.schemas import HealthStatusResponse
 from .routes.v1 import router as v1_router
-from .datetime import get_current_utc_datetime
 
 logger = logging.getLogger(__name__)
 

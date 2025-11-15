@@ -75,4 +75,3 @@ class HealthDetail(CustomBaseModel):
             }
         }
     )
-
