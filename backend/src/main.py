@@ -67,19 +67,21 @@ app = FastAPI(
     description="API for Resume Agent application",
     version="1.0.0",
     lifespan=lifespan,
+    docs_url=None,  # Disable default Swagger UI
+    redoc_url=None,  # Disable default ReDoc
 )
 
 # Include v1 API routes
 app.include_router(v1_router)
 
 
-@app.get("/scalar", include_in_schema=False, response_class=HTMLResponse, tags=["docs"])
-async def scalar_html() -> HTMLResponse:
+@app.get("/docs", include_in_schema=False, response_class=HTMLResponse, tags=["docs"])
+async def scalar_docs() -> HTMLResponse:
     """
-    Scalar API documentation endpoint.
+    Scalar API documentation endpoint (replaces default Swagger UI).
 
     Provides interactive API documentation using Scalar.
-    Access at: http://localhost:8000/scalar
+    Access at: http://localhost:8000/docs
     """
     return get_scalar_api_reference(
         openapi_url=app.openapi_url,
