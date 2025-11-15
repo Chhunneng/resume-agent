@@ -1,5 +1,5 @@
 """
-Database configuration and connection management.
+Database connection management.
 
 Database Naming Conventions:
 - Tables: lower_case_snake, singular form (e.g., post, post_like, user_playlist)
@@ -21,7 +21,7 @@ from sqlalchemy import MetaData, text
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 from sqlmodel import SQLModel
 
-from src.config import settings
+from .config import db_settings
 
 # PostgreSQL naming conventions for database keys
 POSTGRES_INDEXES_NAMING_CONVENTION = {
@@ -40,7 +40,7 @@ SQLModel.metadata = metadata
 
 # Create async engine
 engine = create_async_engine(
-    settings.get_database_url(),
+    db_settings.get_database_url(),
     echo=False,  # Set to True for SQL query logging
     future=True,
 )
@@ -58,6 +58,7 @@ AsyncSessionLocal = async_sessionmaker(
 async def get_db_session() -> AsyncGenerator[AsyncSession, None]:
     """
     Dependency function to get database session.
+
     Use this in FastAPI route dependencies.
     """
     async with AsyncSessionLocal() as session:
@@ -81,3 +82,4 @@ async def init_db() -> None:
 async def close_db() -> None:
     """Close database connections."""
     await engine.dispose()
+

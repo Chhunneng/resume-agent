@@ -11,8 +11,7 @@ from pathlib import Path
 backend_dir = Path(__file__).parent.parent
 sys.path.insert(0, str(backend_dir))
 
-from src.config import settings
-from src.database import metadata
+from src.database import db_settings, metadata
 from sqlmodel import SQLModel
 
 # Import all models here so Alembic can discover them for autogenerate
@@ -38,7 +37,7 @@ if config.config_file_name is not None:
 
 def get_url():
     """Get database URL from configuration."""
-    return settings.get_database_url().replace("+asyncpg", "")
+    return db_settings.get_database_url().replace("+asyncpg", "")
 
 
 def run_migrations_offline() -> None:
