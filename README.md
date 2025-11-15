@@ -105,6 +105,10 @@ Create and manage resumes in different languages for international job applicati
 
 Track your application success rates, ATS scores over time, and identify patterns that lead to more interviews and job offers.
 
+#### Market Demand Analysis
+
+Analyze keywords and skills from all job descriptions you've applied to across your application history. The system aggregates data from your job applications to identify which skills are most frequently requested in the market. Get insights on trending skills, understand market demand patterns, and discover which skills are highly sought after by employers. This helps you prioritize which skills to learn or highlight based on real market demand, making your job search more strategic and effective.
+
 #### Company Research Integration
 
 Link company information and research to your job applications. Keep notes about company culture, values, and recent news to help with interviews.
