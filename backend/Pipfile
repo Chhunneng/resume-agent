@@ -1,0 +1,21 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+fastapi = {extras = ["standard"], version = "==0.121.0"}
+pydantic = "==2.12.4"
+pydantic-settings = "==2.12.0"
+sqlalchemy = ">=2.0.0"
+sqlmodel = "==0.0.27"
+asyncpg = "==0.30.0"
+psycopg2-binary = "==2.9.11"
+python-dotenv = "==1.2.1"
+alembic = "==1.17.2"
+
+[dev-packages]
+ruff = "==0.14.5"
+
+[requires]
+python_version = "3.11"

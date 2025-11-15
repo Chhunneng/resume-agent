@@ -1,0 +1,6 @@
+---
+alwaysApply: true
+description: Emphasizes robust error handling and logging practices in Python files, including context capture for detailed debugging information.
+globs: backend/src/**/*.py
+---
+- Implement robust error handling and logging, including context capture.
