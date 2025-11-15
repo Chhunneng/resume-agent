@@ -4,6 +4,8 @@ import subprocess
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
+from fastapi.responses import HTMLResponse
+from scalar_fastapi import get_scalar_api_reference
 
 from .database import close_db, init_db
 from .datetime import get_current_utc_datetime
@@ -69,6 +71,20 @@ app = FastAPI(
 
 # Include v1 API routes
 app.include_router(v1_router)
+
+
+@app.get("/scalar", include_in_schema=False, response_class=HTMLResponse, tags=["docs"])
+async def scalar_html() -> HTMLResponse:
+    """
+    Scalar API documentation endpoint.
+
+    Provides interactive API documentation using Scalar.
+    Access at: http://localhost:8000/scalar
+    """
+    return get_scalar_api_reference(
+        openapi_url=app.openapi_url,
+        title="Resume Agent API Documentation",
+    )
 
 
 @app.get(
