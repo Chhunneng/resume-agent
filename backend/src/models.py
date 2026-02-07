@@ -4,9 +4,10 @@ from datetime import datetime
 from typing import Any
 
 from fastapi.encoders import jsonable_encoder
-from pydantic import BaseModel, ConfigDict
+from pydantic import ConfigDict
+from sqlmodel import SQLModel
 
-from .datetime import format_datetime_iso
+from src.datetime import format_datetime_iso
 
 
 def datetime_to_utc_str(dt: datetime) -> str:
@@ -22,9 +23,9 @@ def datetime_to_utc_str(dt: datetime) -> str:
     return format_datetime_iso(dt)
 
 
-class CustomBaseModel(BaseModel):
+class CustomBaseModel(SQLModel, table=False):
     """
-    Custom base model for all Pydantic models in the application.
+    Custom base model for all SQLModel schemas in the application.
 
     Provides:
     - Standardized datetime serialization to UTC format with Z suffix
@@ -36,7 +37,8 @@ class CustomBaseModel(BaseModel):
     """
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
     )
 
     def model_dump(self, **kwargs: Any) -> dict[str, Any]:

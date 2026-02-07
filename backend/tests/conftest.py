@@ -75,7 +75,7 @@ def mock_db_engine_connected(mocker: MockerFixture) -> MagicMock:
     Returns a mock engine that simulates successful database connection.
     """
     mock_conn = AsyncMock()
-    mock_conn.execute = AsyncMock()
+    mock_conn.exec = AsyncMock()
     mock_engine = MagicMock()
     mock_engine.begin = MagicMock(return_value=AsyncMock())
     mock_engine.begin.return_value.__aenter__ = AsyncMock(return_value=mock_conn)

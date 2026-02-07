@@ -10,11 +10,13 @@ from .connection import (
     init_db,
     metadata,
 )
+from .migrations import check_migrations
 
 __all__ = [
     "POSTGRES_INDEXES_NAMING_CONVENTION",
     "AsyncSessionLocal",
     "DatabaseConfig",
+    "check_migrations",
     "close_db",
     "db_settings",
     "engine",

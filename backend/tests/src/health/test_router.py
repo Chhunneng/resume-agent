@@ -156,7 +156,7 @@ class TestHealthCheckDetailed:
 
         # Mock database connection
         mock_conn = AsyncMock()
-        mock_conn.execute = AsyncMock()
+        mock_conn.exec = AsyncMock()
         mock_engine = MagicMock()
         mock_engine.begin = MagicMock(return_value=AsyncMock())
         mock_engine.begin.return_value.__aenter__ = AsyncMock(return_value=mock_conn)
@@ -179,7 +179,7 @@ class TestHealthCheckDetailed:
 
         # Mock database connection
         mock_conn = AsyncMock()
-        mock_conn.execute = AsyncMock()
+        mock_conn.exec = AsyncMock()
         mock_engine = MagicMock()
         mock_engine.begin = MagicMock(return_value=AsyncMock())
         mock_engine.begin.return_value.__aenter__ = AsyncMock(return_value=mock_conn)
@@ -209,7 +209,7 @@ class TestHealthCheckDetailed:
         """Test that function checks database connection."""
         mock_conn = AsyncMock()
         mock_execute = AsyncMock()
-        mock_conn.execute = mock_execute
+        mock_conn.exec = mock_execute
         mock_engine = MagicMock()
         mock_engine.begin = MagicMock(return_value=AsyncMock())
         mock_engine.begin.return_value.__aenter__ = AsyncMock(return_value=mock_conn)
@@ -231,7 +231,7 @@ class TestHealthCheckDetailed:
     ) -> None:
         """Helper method to set up mocks for connected database scenario."""
         mock_conn = AsyncMock()
-        mock_conn.execute = AsyncMock()
+        mock_conn.exec = AsyncMock()
         mock_engine = MagicMock()
         mock_engine.begin = MagicMock(return_value=AsyncMock())
         mock_engine.begin.return_value.__aenter__ = AsyncMock(return_value=mock_conn)

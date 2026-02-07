@@ -188,15 +188,57 @@ Refs #123
 - [Conventional Commits 1.0.0 Specification](https://www.conventionalcommits.org/en/v1.0.0/)
 - [Semantic Versioning](https://semver.org/)
 
+## Documentation Requirements
+
+When adding new features or making significant changes, please update the documentation:
+
+### What to Document
+
+- **New Features**: Document what the feature does and how to use it
+- **API Endpoints**: Document request/response formats, authentication requirements, and examples
+- **Database Changes**: Document schema changes, migrations, and model updates
+- **Configuration**: Document new environment variables or configuration options
+- **Breaking Changes**: Clearly document any breaking changes
+
+### Where to Document
+
+1. **Code Documentation**: Add docstrings to functions and classes
+2. **API Documentation**: Update API docs in `docs/api/`
+3. **Guides**: Update or create guides in `docs/guides/`
+4. **Architecture Docs**: Update architecture docs if system design changes
+5. **README Files**: Update relevant README files
+
+### Documentation Checklist
+
+When adding a feature, ensure:
+
+- [ ] Code has proper docstrings
+- [ ] API endpoints are documented (if applicable)
+- [ ] Examples are provided
+- [ ] README files are updated
+- [ ] Architecture docs are updated (if needed)
+- [ ] Migration docs are updated (if database changes)
+
+### Documentation Standards
+
+- Use clear, simple language (beginner-friendly)
+- Include code examples
+- Keep documentation up to date
+- Follow existing documentation structure
+- Use consistent formatting
+
+See [Documentation Index](docs/README.md) for documentation structure and guidelines.
+
 ## Getting Started
 
 1. Fork the repository
 2. Create a feature branch from `main`
 3. Make your changes following the code style guidelines
 4. Write tests for new features
-5. Ensure all tests pass
-6. Commit your changes using the Conventional Commits format
-7. Push to your fork and create a pull request
+5. Update documentation as needed
+6. Ensure all tests pass
+7. Commit your changes using the Conventional Commits format
+8. Push to your fork and create a pull request
 
 Thank you for contributing to Resume Agent!
 

@@ -6,8 +6,9 @@ from fastapi import APIRouter, status
 from fastapi.responses import JSONResponse
 from sqlalchemy import text
 
-from ..database import engine
-from ..datetime import get_current_utc_datetime
+from src.database import engine
+from src.datetime import get_current_utc_datetime
+
 from .constants import DatabaseStatus, HealthStatus
 from .schemas import HealthDetail, HealthStatusResponse
 
@@ -104,7 +105,7 @@ async def health_check_detailed() -> JSONResponse:
     # Check database connectivity
     try:
         async with engine.begin() as conn:
-            await conn.execute(text("SELECT 1"))
+            await conn.exec(text("SELECT 1"))
         database_status = DatabaseStatus.CONNECTED
         overall_status = HealthStatus.HEALTHY
         http_status = status.HTTP_200_OK

@@ -18,8 +18,11 @@ Database Naming Conventions:
 from collections.abc import AsyncGenerator
 
 from sqlalchemy import MetaData, text
-from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
+from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
 from sqlmodel import SQLModel
+from sqlmodel.ext.asyncio.session import AsyncSession
+
+from src.config import settings
 
 from .config import db_settings
 
@@ -41,7 +44,7 @@ SQLModel.metadata = metadata
 # Create async engine
 engine = create_async_engine(
     db_settings.get_database_url(),
-    echo=False,  # Set to True for SQL query logging
+    echo=settings.debug,  # Set to True for SQL query logging
     future=True,
 )
 

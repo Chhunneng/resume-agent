@@ -1,17 +1,33 @@
 from datetime import timedelta
 
-from pydantic_settings import BaseSettings
+from pydantic import Field
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class AuthConfig(BaseSettings):
-    JWT_ALG: str
-    JWT_SECRET: str
-    JWT_EXP: int = 5  # minutes
+    """Authentication configuration loaded from environment variables."""
 
-    REFRESH_TOKEN_KEY: str
-    REFRESH_TOKEN_EXP: timedelta = timedelta(days=30)
+    jwt_alg: str = Field(default="HS256", alias="JWT_ALG")
+    jwt_access_token_secret: str = Field(alias="JWT_ACCESS_TOKEN_SECRET")
+    jwt_refresh_token_secret: str = Field(alias="JWT_REFRESH_TOKEN_SECRET")
+    jwt_access_token_exp: timedelta = Field(
+        default=timedelta(minutes=15), alias="JWT_ACCESS_TOKEN_EXP"
+    )
+    jwt_refresh_token_exp: timedelta = Field(
+        default=timedelta(days=30),
+        alias="JWT_REFRESH_TOKEN_EXP",
+    )
 
-    SECURE_COOKIES: bool = True
+    secure_cookies: bool = Field(default=True, alias="SECURE_COOKIES")
+
+    model_config = SettingsConfigDict(
+        env_file=".env",
+        env_file_encoding="utf-8",
+        case_sensitive=False,
+        validate_by_name=True,
+        validate_by_alias=True,
+        extra="ignore",
+    )
 
 
 auth_settings = AuthConfig()

@@ -1,117 +1,26 @@
 # Resume Agent
 
-Resume Agent is an intelligent application designed to help job seekers optimize their resumes for specific job descriptions, pass Applicant Tracking Systems (ATS), and effectively track their job applications. The platform uses AI-powered analysis to extract skills from job descriptions, compare them with your existing skills, and generate tailored resumes that maximize your chances of landing interviews.
+Resume Agent is a web application for job seekers who want tailored resumes and clear application tracking. You upload PDF or Word resumes and job descriptions. AI analyzes job descriptions, extracts required skills, compares them with your skills, and generates ATS friendly resumes for each role. Source resumes convert to LaTeX for precise control. You edit LaTeX in a resizable split view and preview the compiled PDF in real time. Encrypted storage protects API keys for OpenAI or DeepSeek with automatic token refresh. Application tracking helps you manage submissions and status across roles.
 
 ## Table of Contents
 
 - [Features](#features)
-  - [Core Features](#core-features)
-  - [Additional Features](#additional-features)
 - [Technology Stack](#technology-stack)
 - [Prerequisites](#prerequisites)
 - [Installation & Setup](#installation--setup)
-  - [Using Docker (Recommended)](#using-docker-recommended)
-  - [Manual Setup](#manual-setup)
 - [Usage](#usage)
 - [Project Structure](#project-structure)
 - [Development](#development)
+- [Documentation](#documentation)
 - [Contributing](#contributing)
 
 ## Features
 
-### Core Features
-
-#### 1. Job Description Skill Analysis
-
-Analyze job descriptions to extract required skills and identify related skills that may not be explicitly mentioned. This helps you understand the full scope of what employers are looking for.
-
-#### 2. Skill Gap Comparison
-
-Compare your existing skills against the requirements in a job description. Get a clear breakdown of:
-
-- Skills you already have
-- Skills you're missing
-- Skills that are related and could strengthen your application
-
-#### 3. Resume Tailoring
-
-Automatically customize your resume to match specific job descriptions while ensuring it passes ATS filters. The system optimizes keyword placement and formatting to avoid AI-generated content detection.
-
-#### 4. LaTeX to PDF Resume Generation
-
-Generate professional, ATS-friendly resumes using LaTeX templates and export them directly to PDF format. This ensures consistent formatting and professional appearance.
-
-#### 5. Feedback System
-
-Receive detailed feedback on your resume based on how well it matches the job description. Get suggestions for improvements, keyword optimization, and content adjustments.
-
-#### 6. Job Application Tracking
-
-Track all your job applications in one place. Each application is linked to its corresponding job description, allowing you to:
-
-- Monitor application status
-- Review tailored resumes for each position
-- Track application dates and deadlines
-
-#### 7. Template Selection
-
-Choose from multiple professional resume templates optimized for different industries and ATS systems. Each template is designed to maximize readability and keyword visibility.
-
-### Additional Features
-
-The following features are planned to enhance job search effectiveness:
-
-#### Skill Gap Analysis with Learning Resources
-
-When skills are missing, receive recommendations for courses, tutorials, and learning resources to help you acquire those skills quickly.
-
-#### Keyword Optimization
-
-Get suggestions for ATS-friendly keywords based on the job description. The system analyzes industry-specific terminology and suggests the best keywords to include in your resume.
-
-#### Resume Versioning
-
-Maintain multiple versions of your resume for different types of positions. Track changes and compare versions to see which performs best.
-
-#### Cover Letter Generation
-
-Automatically generate tailored cover letters that complement your resume and address specific points in the job description.
-
-#### Interview Preparation
-
-Generate potential interview questions based on the job description and your resume. Practice with questions that are likely to be asked for that specific role.
-
-#### ATS Score Analysis
-
-Get a compatibility score that indicates how well your resume will perform with Applicant Tracking Systems. Receive specific recommendations to improve your score.
-
-#### Resume Comparison Tool
-
-Compare different versions of your resume side-by-side to see which format and content work best for different job types.
-
-#### Application Deadline Tracking
-
-Set reminders for application deadlines and important dates. Never miss an opportunity due to missed deadlines.
-
-#### Export Formats
-
-Export your resume in multiple formats including PDF, Word, LaTeX, and plain text to meet different application requirements.
-
-#### Multi-language Support
-
-Create and manage resumes in different languages for international job applications.
-
-#### Resume Analytics Dashboard
-
-Track your application success rates, ATS scores over time, and identify patterns that lead to more interviews and job offers.
-
-#### Market Demand Analysis
-
-Analyze keywords and skills from all job descriptions you've applied to across your application history. The system aggregates data from your job applications to identify which skills are most frequently requested in the market. Get insights on trending skills, understand market demand patterns, and discover which skills are highly sought after by employers. This helps you prioritize which skills to learn or highlight based on real market demand, making your job search more strategic and effective.
-
-#### Company Research Integration
-
-Link company information and research to your job applications. Keep notes about company culture, values, and recent news to help with interviews.
+- **Resume upload** – Upload PDF or Word resumes; text is extracted for LaTeX generation.
+- **LaTeX generation** – Generate LaTeX from extracted text using OpenAI or DeepSeek (API keys set in Profile).
+- **Resume editor** – Edit LaTeX in a resizable panel; click “Preview PDF” to compile and view the PDF (server-side, Overleaf-style).
+- **Profile** – Manage account and API keys (encrypted). Clear “Saved” vs “Not set” state per provider.
+- **Auth** – Register, login, JWT with refresh; frontend auto-refreshes tokens on 401.
 
 ## Technology Stack
 
@@ -137,8 +46,8 @@ Link company information and research to your job applications. Keep notes about
 ### Infrastructure
 
 - **Containerization**: Docker
-- **Orchestration**: Docker Compose
-- **Development**: Hot-reload enabled development containers
+- **Orchestration**: Docker Compose (`docker compose`, not `docker-compose`)
+- **Development**: Hot-reload for backend and frontend; backend image includes texlive for LaTeX→PDF preview
 
 ## Prerequisites
 
@@ -172,19 +81,11 @@ The easiest way to get started is using Docker Compose, which sets up both the b
 2. **Set up environment variables**
 
    ```bash
-   cp .env.example backend/.env
+   cp backend/.env.example backend/.env
+   # Optional: cp frontend/.env.example frontend/.env
    ```
 
-   Edit `backend/.env` with your configuration:
-
-   ```env
-   POSTGRES_DB=resume_agent
-   POSTGRES_USER=postgres
-   POSTGRES_PASSWORD=your_password
-   POSTGRES_HOST=postgres
-   POSTGRES_PORT=5432
-   DEBUG=true
-   ```
+   Edit `backend/.env` with your configuration (see `backend/.env.example`). For LaTeX PDF preview and API key encryption you will need `LLM_CONFIG_ENCRYPTION_KEY`; the backend image includes texlive for PDF compilation.
 
 3. **Start the services**
 
@@ -202,7 +103,7 @@ The easiest way to get started is using Docker Compose, which sets up both the b
 
    - Backend API: <http://localhost:8000>
    - API Documentation: <http://localhost:8000/docs>
-   - Frontend: <http://localhost:3000> (when frontend is set up)
+   - Frontend: <http://localhost:5173>
 
 ### Manual Setup
 
@@ -213,75 +114,52 @@ For detailed manual setup instructions, see:
 
 ## Usage
 
-> **Note**: Detailed usage documentation will be available in the respective directory READMEs. See [backend/README.md](backend/README.md) and [frontend/README.md](frontend/README.md) for more information.
-
-### Basic Workflow
-
-1. **Upload or Create Your Resume**
-   - Start by uploading your existing resume or creating a new one using one of the available templates.
-
-2. **Add a Job Description**
-   - Paste or upload a job description you're interested in applying for.
-
-3. **Analyze Skills**
-   - The system will extract required skills from the job description and suggest related skills.
-
-4. **Review Skill Gap**
-   - See which skills you have, which you're missing, and get recommendations for improvement.
-
-5. **Tailor Your Resume**
-   - Use the resume tailoring feature to automatically optimize your resume for the specific job description.
-
-6. **Generate PDF**
-   - Export your tailored resume as a professional PDF using LaTeX templates.
-
-7. **Track Application**
-   - Save the job application with the tailored resume for future reference and tracking.
-
-8. **Get Feedback**
-   - Review feedback on how well your resume matches the job description and make improvements.
-
-To be continued...
+1. **Register or log in** at the frontend (http://localhost:5173).
+2. **Profile → API keys**: Set your OpenAI and/or DeepSeek API keys (stored encrypted). A green “Saved” state indicates the key is set.
+3. **Resumes**: Upload a PDF or Word resume. Open it to edit.
+4. **Resume editor**: Generate LaTeX (choose provider), edit the source, drag the divider to resize panels, and click “Preview PDF” to compile and view the PDF. Save to persist changes.
+5. Use the browser’s Print (e.g. Ctrl+P) to export the preview as PDF if needed.
 
 ## Project Structure
 
 ```text
 resume-agent/
 ├── backend/
-│   ├── alembic/              # Database migration files
-│   │   ├── env.py
-│   │   ├── script.py.mako
-│   │   └── versions/        # Migration versions
-│   ├── src/                 # Main source code
-│   │   ├── auth/            # Authentication module
-│   │   │   └── config.py
-│   │   ├── config.py        # Application configuration
-│   │   ├── database.py      # Database connection and setup
-│   │   ├── exceptions.py    # Custom exception classes
-│   │   ├── main.py          # FastAPI application entry point
-│   │   └── pagination.py    # Pagination utilities
-│   ├── tests/               # Test files
-│   ├── templates/           # Template files
-│   ├── scripts/             # Utility scripts
-│   │   ├── lint.sh          # Linting script
-│   │   └── migrate.sh       # Migration script
-│   ├── alembic.ini          # Alembic configuration
-│   ├── dev.Dockerfile       # Development Dockerfile
-│   ├── entrypoint.sh        # Docker entrypoint script
-│   ├── Pipfile              # Python dependencies
-│   ├── Pipfile.lock         # Locked dependencies
-│   └── pyproject.toml       # Python project configuration
-├── frontend/                # Frontend React application
-│   └── (to be implemented)
-├── docker-compose.dev.yml   # Docker Compose configuration
-├── .env.example             # Example environment variables
-├── .gitignore               # Git ignore rules
-└── README.md                # This file
+│   ├── alembic/             # Database migrations
+│   ├── src/
+│   │   ├── auth/            # JWT, RBAC, user management
+│   │   ├── database/        # PostgreSQL connection, base models
+│   │   ├── documents/       # PDF/Word parsing
+│   │   ├── health/          # Health check endpoints
+│   │   ├── llm/             # LaTeX generation, encryption, user LLM config
+│   │   ├── resumes/         # Resume CRUD, upload, LaTeX→PDF preview
+│   │   ├── routes/v1/       # API route aggregation
+│   │   ├── config.py
+│   │   └── main.py
+│   ├── tests/
+│   ├── dev.Dockerfile       # Includes texlive for PDF preview
+│   ├── Pipfile / Pipfile.lock
+│   └── .env.example
+├── frontend/
+│   ├── src/
+│   │   ├── api/             # Auth client, resumes, LLM config API
+│   │   ├── components/      # Layout, UI, resize handle
+│   │   ├── config/          # Env, routes (and route config)
+│   │   ├── features/auth/  # Auth context, storage
+│   │   ├── hooks/           # e.g. useResizePanel
+│   │   ├── pages/           # Home, login, register, profile, resumes, resume-edit
+│   │   └── routes/          # App routes (map over route config)
+│   ├── dev.Dockerfile
+│   └── .env.example
+├── docs/                    # Guides, API reference, architecture
+├── docker-compose.dev.yml   # Postgres, backend-dev, frontend-dev
+├── .gitignore
+└── README.md
 ```
 
 ## Development
 
-> **Note**: For detailed development documentation, including code style guidelines, testing, linting, and database migrations, see [backend/README.md](backend/README.md) and [frontend/README.md](frontend/README.md).
+> **Note**: For detailed development documentation, including code style guidelines, testing, linting, and database migrations, see [backend/README.md](backend/README.md) and [frontend/README.md](frontend/README.md). Use `docker compose -f docker-compose.dev.yml up` for local dev; frontend runs on **port 5173** (Vite).
 
 ### Development Workflow
 
@@ -293,10 +171,20 @@ resume-agent/
 
 ## Documentation
 
-For detailed documentation, please refer to:
+Comprehensive documentation is available in the [docs/](docs/) directory:
 
-- [backend/README.md](backend/README.md) - Backend-specific documentation (API details, database setup, etc.)
-- [frontend/README.md](frontend/README.md) - Frontend-specific documentation (component structure, build process, etc.)
+- **[Documentation Index](docs/README.md)** - Complete documentation hub
+- **[Getting Started Guide](docs/guides/getting-started.md)** - First-time setup
+- **[API Documentation](docs/api/reference.md)** - Complete API reference
+- **[Architecture Documentation](docs/architecture/overview.md)** - System design
+- **[Development Guide](docs/development/setup.md)** - Development setup
+
+### Quick Links
+
+- [Backend Documentation](backend/README.md) - Backend setup and API details
+- [Frontend Documentation](frontend/README.md) - Frontend setup and structure
+- [Authentication Guide](docs/guides/authentication.md) - Using authentication
+- [RBAC Setup Guide](docs/guides/rbac-setup.md) - Setting up roles and permissions
 
 ## Contributing
 

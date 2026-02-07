@@ -10,7 +10,7 @@ globs: backend/src/**/*.py
 - Use descriptive variable names with auxiliary verbs (e.g., `is_active`, `has_permission`).
 - Follow proper naming conventions: use lowercase with underscores (e.g., `routers/user_routes.py`).
 - Use `def` for pure functions and `async def` for asynchronous operations.
-- Use Python type hints for all function signatures. Prefer Pydantic models for input validation.
+- Use Python type hints for all function signatures. Prefer SQLModel models for input validation.
 - Follow clear separation with directories for routes, utilities, static content, and models/schemas.
 - Use the "Receive an Object, Return an Object" pattern.
 - Handle errors at the beginning of functions with early returns.

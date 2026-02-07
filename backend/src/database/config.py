@@ -1,7 +1,7 @@
 """Database configuration loaded from environment variables."""
 
 from pydantic import Field
-from pydantic_settings import BaseSettings
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class DatabaseConfig(BaseSettings):
@@ -14,12 +14,14 @@ class DatabaseConfig(BaseSettings):
     postgres_port: int = Field(default=5432, alias="POSTGRES_PORT")
     database_url: str | None = Field(default=None, alias="DATABASE_URL")
 
-    class Config:
-        env_file = ".env"
-        env_file_encoding = "utf-8"
-        case_sensitive = False
-        populate_by_name = True
-        extra = "ignore"  # Ignore extra environment variables not defined in the model
+    model_config = SettingsConfigDict(
+        env_file=".env",
+        env_file_encoding="utf-8",
+        case_sensitive=False,
+        validate_by_name=True,
+        validate_by_alias=True,
+        extra="ignore",  # Ignore extra environment variables not defined in the model
+    )
 
     def get_database_url(self) -> str:
         """Build database URL from individual components if not provided."""

@@ -1,7 +1,12 @@
 FROM python:3.11-slim
 
-# Install pipenv
-RUN pip install pipenv
+# Install pipenv and texlive for LaTeX-to-PDF preview (Overleaf-style)
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    texlive-latex-base \
+    texlive-latex-extra \
+    texlive-fonts-recommended \
+    && rm -rf /var/lib/apt/lists/* \
+    && pip install pipenv
 
 # Set working directory
 WORKDIR /app

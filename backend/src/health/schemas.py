@@ -2,9 +2,11 @@
 
 from datetime import datetime
 
-from pydantic import ConfigDict, Field
+from pydantic import ConfigDict
+from sqlmodel import Field
 
-from ..models import CustomBaseModel
+from src.models import CustomBaseModel
+
 from .constants import DatabaseStatus, HealthStatus
 
 
@@ -18,13 +20,9 @@ class HealthStatusResponse(CustomBaseModel):
     timestamp: datetime = Field(
         ...,
         description="Current server timestamp in ISO 8601 format (UTC)",
-        examples=["2024-01-01T00:00:00Z"],
+        schema_extra={"examples": ["2024-01-01T00:00:00Z"]},
     )
-    version: str = Field(
-        ...,
-        description="API version",
-        examples=["1.0.0"],
-    )
+    version: str = Field(..., description="API version", schema_extra={"examples": ["1.0.0"]})
 
     model_config = ConfigDict(
         json_schema_extra={
@@ -47,21 +45,15 @@ class HealthDetail(CustomBaseModel):
     timestamp: datetime = Field(
         ...,
         description="Current server timestamp in ISO 8601 format (UTC)",
-        examples=["2024-01-01T00:00:00Z"],
+        schema_extra={"examples": ["2024-01-01T00:00:00Z"]},
     )
-    version: str = Field(
-        ...,
-        description="API version",
-        examples=["1.0.0"],
-    )
+    version: str = Field(..., description="API version", schema_extra={"examples": ["1.0.0"]})
     database: DatabaseStatus = Field(
         ...,
         description="Database connection status",
     )
     uptime_seconds: float = Field(
-        ...,
-        description="Application uptime in seconds",
-        examples=[3600.5],
+        ..., description="Application uptime in seconds", schema_extra={"examples": [3600.5]}
     )
 
     model_config = ConfigDict(
